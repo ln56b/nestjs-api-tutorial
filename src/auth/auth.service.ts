@@ -58,10 +58,10 @@ export class AuthService {
   }
 
   private async _signToken(
-    userId: number,
+    sub: number,
     email: string,
   ): Promise<{ access_token: string }> {
-    const payload = { userId, email };
+    const payload = { sub, email };
     const token = await this.jwt.signAsync(payload, {
       expiresIn: this.config.get('JWT_EXPIRES_IN'),
       secret: this.config.get('JWT_SECRET'),
