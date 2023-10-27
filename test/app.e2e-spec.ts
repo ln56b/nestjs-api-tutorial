@@ -82,8 +82,35 @@ describe('App e2e', () => {
       });
 
       it('should signin user', () => {
-        return pactum.spec().post(signinUrl).withBody(dto).expectStatus(200);
+        return pactum
+          .spec()
+          .post(signinUrl)
+          .withBody(dto)
+          .expectStatus(200)
+          .stores('userAccessToken', 'access_token');
       });
     });
+  });
+
+  describe('User', () => {
+    const usersUrl = '/users';
+    describe('Get me', () => {
+      it('should get current user', () => {
+        return pactum
+          .spec()
+          .get(`${usersUrl}/me`)
+          .withBearerToken(`$S{userAccessToken}`)
+          .expectStatus(200);
+      });
+    });
+    describe('Edit user', () => {});
+  });
+
+  describe('Bookmark', () => {
+    describe('Create bookmark', () => {});
+    describe('Get bookmarks', () => {});
+    describe('Get bookmark by id', () => {});
+    describe('Edit bookmark', () => {});
+    describe('Delete bookmark', () => {});
   });
 });
